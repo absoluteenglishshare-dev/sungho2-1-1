@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>ABSOLUTE 영어 | 성호고2 1학기 1차</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0c0c0f;
+  --surface: #13131a;
+  --card: #1a1a24;
+  --border: #2a2a3d;
+  --accent: #6366f1;
+  --accent2: #8b5cf6;
+  --gold: #f59e0b;
+  --green: #10b981;
+  --red: #ef4444;
+  --text: #f0f0f8;
+  --muted: #6b7280;
+  --tag: #1e1e35;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+body { background: var(--bg); color: var(--text); font-family: 'Noto Sans KR', sans-serif; min-height: 100vh; overflow-x: hidden; }
+
+.header {
+  background: linear-gradient(135deg, #0a0a14 0%, #16082a 100%);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 20px 10px;
+  position: sticky; top: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.brand { font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 3px; background: linear-gradient(90deg, #818cf8, #c084fc, #f59e0b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.brand-sub { font-size: 10px; color: var(--muted); letter-spacing: 1px; margin-top: 1px; }
+.school-tag { background: var(--tag); border: 1px solid #3a3a5a; border-radius: 8px; padding: 4px 10px; font-size: 10px; color: #a5b4fc; font-family: 'Space Mono', monospace; }
+
+.screen { display: none; padding: 20px 16px; max-width: 600px; margin: 0 auto; }
+.screen.active { display: block; animation: fadeUp 0.3s ease; }
+@keyframes fadeUp { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:translateY(0); } }
+
+.home-hero { text-align: center; padding: 28px 0 20px; }
+.home-title { font-size: 26px; font-weight: 900; line-height: 1.25; margin-bottom: 8px; }
+.home-title em { color: #818cf8; font-style: normal; }
+.home-desc { color: var(--muted); font-size: 12px; line-height: 1.7; }
+
+.stat-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; margin: 20px 0; }
+.stat-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 14px 8px; text-align: center; }
+.stat-n { font-family: 'Bebas Neue', sans-serif; font-size: 28px; color: #818cf8; line-height: 1; }
+.stat-l { font-size: 10px; color: var(--muted); margin-top: 3px; }
+
+.sec-title { font-size: 11px; font-weight: 700; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; margin-bottom: 10px; }
+
+.mode-grid { display: grid; gap: 10px; margin-bottom: 20px; }
+.mode-card { background: var(--card); border: 2px solid var(--border); border-radius: 16px; padding: 18px 16px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 14px; }
+.mode-card:active { transform: scale(0.98); }
+.mode-card:hover { border-color: var(--accent); }
+.mode-icon { width: 46px; height: 46px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
+.mode-icon.a { background: linear-gradient(135deg,#6366f1,#8b5cf6); }
+.mode-icon.b { background: linear-gradient(135deg,#0891b2,#0d9488); }
+.mode-icon.c { background: linear-gradient(135deg,#d97706,#dc2626); }
+.mode-info { flex: 1; }
+.mode-name { font-weight: 700; font-size: 14px; margin-bottom: 3px; }
+.mode-desc { font-size: 11px; color: var(--muted); }
+.mode-arrow { color: var(--muted); font-size: 16px; }
+
+.count-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+.cnt-btn { background: var(--card); border: 2px solid var(--border); border-radius: 10px; color: var(--text); padding: 9px 16px; font-size: 13px; font-family: 'Noto Sans KR',sans-serif; cursor: pointer; transition: all 0.2s; }
+.cnt-btn.sel { border-color: var(--accent); background: #1a1a38; color: #818cf8; font-weight: 700; }
+
+.qz-header { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
+.back-btn { width: 36px; height: 36px; border-radius: 10px; background: var(--card); border: 1px solid var(--border); color: var(--text); font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.qz-prog-wrap { flex: 1; }
+.qz-prog-label { font-size: 11px; color: var(--muted); margin-bottom: 5px; display: flex; justify-content: space-between; }
+.prog-bar { height: 5px; background: var(--border); border-radius: 99px; overflow: hidden; }
+.prog-fill { height: 100%; background: linear-gradient(90deg,var(--accent),var(--accent2)); border-radius: 99px; transition: width 0.4s ease; }
+
+.badge-row { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
+.badge { display: inline-flex; align-items: center; gap: 5px; background: var(--tag); border: 1px solid var(--border); border-radius: 99px; padding: 4px 10px; font-size: 10px; color: var(--muted); }
+.badge.num { color: #818cf8; border-color: #3a3a6a; font-family: 'Space Mono',monospace; }
+
+.q-card { background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 26px 20px; margin-bottom: 18px; text-align: center; position: relative; overflow: hidden; min-height: 110px; display: flex; align-items: center; justify-content: center; }
+.q-card::before { content:''; position:absolute; top:0;left:0;right:0; height:3px; background:linear-gradient(90deg,var(--accent),var(--accent2),var(--gold)); }
+.q-text { font-size: 22px; font-weight: 700; line-height: 1.4; word-break: break-word; }
+.q-sub { font-size: 11px; color: var(--muted); margin-top: 8px; }
+
+.choices { display: grid; gap: 9px; }
+.choice { background: var(--card); border: 2px solid var(--border); border-radius: 13px; color: var(--text); padding: 14px 16px; font-size: 14px; font-family: 'Noto Sans KR',sans-serif; text-align: left; cursor: pointer; transition: all 0.15s; display: flex; align-items: center; gap: 11px; word-break: break-word; line-height: 1.5; }
+.choice:active:not(:disabled) { transform: scale(0.98); }
+.ch-num { width: 26px; height: 26px; border-radius: 7px; background: var(--border); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; flex-shrink: 0; font-family: 'Space Mono',monospace; }
+.choice.correct { border-color: var(--green); background: #052e16; }
+.choice.correct .ch-num { background: var(--green); color: white; }
+.choice.wrong { border-color: var(--red); background: #1f0a0a; opacity: 0.7; }
+.choice.wrong .ch-num { background: var(--red); color: white; }
+.choice:disabled { cursor: default; }
+
+.feedback { border-radius: 13px; padding: 13px 16px; margin-top: 12px; font-size: 13px; font-weight: 700; display: none; align-items: center; gap: 10px; }
+.feedback.show { display: flex; }
+.feedback.ok { background: #052e16; border: 1px solid var(--green); color: var(--green); }
+.feedback.ng { background: #1f0a0a; border: 1px solid var(--red); color: var(--red); }
+.fb-ans { font-size: 11px; color: var(--muted); font-weight: 400; margin-top: 2px; }
+
+.next-btn { width: 100%; padding: 15px; border-radius: 13px; background: linear-gradient(135deg,var(--accent),var(--accent2)); border: none; color: white; font-size: 15px; font-weight: 700; font-family: 'Noto Sans KR',sans-serif; cursor: pointer; margin-top: 12px; display: none; }
+.next-btn.show { display: block; }
+.next-btn:active { opacity: 0.9; }
+
+.hl { color: #fb923c; font-weight: 700; }
+.sent-context { font-size: 13px; line-height: 1.8; margin-bottom: 14px; background: #0f0f18; border-radius: 10px; padding: 12px 14px; border: 1px solid var(--border); }
+.ctx-given { color: var(--muted); }
+.ctx-blank { display: inline-block; background: #2a1a00; border: 1.5px dashed #fb923c; border-radius: 6px; padding: 1px 10px; color: #fb923c; font-weight: 700; font-size: 12px; margin: 0 2px; }
+
+.sent-card { background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 22px 18px; margin-bottom: 16px; position: relative; overflow: hidden; }
+.sent-card::before { content:''; position:absolute; top:0;left:0;right:0; height:3px; background:linear-gradient(90deg,#d97706,#dc2626,#8b5cf6); }
+.sent-label { font-size: 10px; color: var(--muted); margin-bottom: 8px; font-family: 'Space Mono',monospace; }
+.sent-hint { font-size: 12px; color: #a5b4fc; margin-bottom: 14px; line-height: 1.6; }
+.sent-hint strong { color: var(--gold); }
+
+.answer-zone { min-height: 52px; background: #0f0f18; border: 2px dashed var(--border); border-radius: 12px; padding: 10px 12px; margin-bottom: 14px; display: flex; flex-wrap: wrap; gap: 7px; align-items: center; }
+.answer-zone.has-words { border-color: var(--accent); }
+
+.word-pool { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+.word-chip { background: var(--tag); border: 1.5px solid var(--border); border-radius: 8px; padding: 8px 12px; font-size: 13px; font-family: 'Space Mono',monospace; cursor: pointer; transition: all 0.15s; color: var(--text); user-select: none; }
+.word-chip:active { transform: scale(0.95); }
+.word-chip.in-answer { background: #1a1a38; border-color: var(--accent); color: #a5b4fc; }
+.word-chip.used { opacity: 0.3; cursor: default; pointer-events: none; }
+
+.sent-btns { display: flex; gap: 8px; }
+.check-btn { flex: 1; padding: 14px; border-radius: 12px; background: linear-gradient(135deg,var(--accent),var(--accent2)); border: none; color: white; font-size: 14px; font-weight: 700; font-family: 'Noto Sans KR',sans-serif; cursor: pointer; }
+.reset-btn { padding: 14px 16px; border-radius: 12px; background: var(--card); border: 2px solid var(--border); color: var(--muted); font-size: 13px; font-family: 'Noto Sans KR',sans-serif; cursor: pointer; }
+
+.sent-feedback { border-radius: 12px; padding: 12px 14px; margin-top: 12px; font-size: 13px; display: none; }
+.sent-feedback.show { display: block; }
+.sent-feedback.ok { background: #052e16; border: 1px solid var(--green); color: var(--green); }
+.sent-feedback.ng { background: #1f0a0a; border: 1px solid var(--red); color: var(--red); }
+.correct-sent { font-size: 12px; color: var(--muted); margin-top: 6px; line-height: 1.6; }
+
+.result-hero { text-align: center; padding: 28px 0 24px; }
+.score-ring { width: 120px; height: 120px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 18px; background: conic-gradient(var(--accent) 0%, var(--accent2) var(--pct,0%), var(--border) var(--pct,0%)); }
+.score-inner { width: 92px; height: 92px; border-radius: 50%; background: var(--bg); display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.score-pct { font-family: 'Bebas Neue',sans-serif; font-size: 30px; color: #818cf8; line-height: 1; }
+.score-sub-l { font-size: 9px; color: var(--muted); }
+.result-title { font-size: 20px; font-weight: 900; margin-bottom: 5px; }
+.result-sub { color: var(--muted); font-size: 12px; }
+
+.res-stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; margin: 20px 0; }
+.res-stat { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 12px 8px; text-align: center; }
+.res-n { font-family: 'Bebas Neue',sans-serif; font-size: 26px; line-height: 1; }
+.res-n.g { color: var(--green); } .res-n.r { color: var(--red); } .res-n.gold { color: var(--gold); }
+.res-l { font-size: 10px; color: var(--muted); margin-top: 3px; }
+
+.wrong-title { font-size: 13px; font-weight: 700; color: var(--red); margin-bottom: 10px; }
+.wrong-item { background: var(--card); border: 1px solid var(--border); border-left: 3px solid var(--red); border-radius: 11px; padding: 12px 14px; margin-bottom: 8px; }
+.wrong-word { font-weight: 700; font-size: 14px; }
+.wrong-detail { font-size: 11px; color: var(--muted); margin-top: 3px; }
+
+.res-btns { display: grid; gap: 8px; margin-top: 20px; }
+.res-btn { width: 100%; padding: 15px; border-radius: 13px; font-size: 14px; font-weight: 700; font-family: 'Noto Sans KR',sans-serif; cursor: pointer; transition: all 0.2s; border: none; }
+.res-btn:active { transform: scale(0.98); }
+.res-btn.primary { background: linear-gradient(135deg,var(--accent),var(--accent2)); color: white; }
+.res-btn.ghost { background: var(--card); border: 2px solid var(--border); color: var(--text); }
+
+.footer { text-align: center; padding: 18px; font-size: 10px; color: var(--muted); border-top: 1px solid var(--border); margin-top: 32px; letter-spacing: 0.5px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <div class="brand">ABSOLUTE 영어</div>
+    <div class="brand-sub">성호고 2학년 · 1학기 1차</div>
+  </div>
+  <div class="school-tag">26년 1학기</div>
+</div>
+
+<!-- 홈 -->
+<div class="screen active" id="screen-home">
+  <div class="home-hero">
+    <div class="home-title">내신 퀴즈<br><em>완전 정복</em></div>
+    <div class="home-desc">3월 모의고사 21·22·23·24·29·31번<br>교과서 1과 · 2과 | 단어 90개 · 핵심문장 28개</div>
+  </div>
+
+  <div class="stat-row">
+    <div class="stat-card"><div class="stat-n">90</div><div class="stat-l">전체 단어</div></div>
+    <div class="stat-card"><div class="stat-n">9</div><div class="stat-l">지문 수</div></div>
+    <div class="stat-card"><div class="stat-n">28</div><div class="stat-l">핵심문장</div></div>
+  </div>
+
+  <div class="sec-title">학습 모드 선택</div>
+  <div class="mode-grid">
+    <div class="mode-card" onclick="startMode('eng2kor')">
+      <div class="mode-icon a">🔤</div>
+      <div class="mode-info">
+        <div class="mode-name">영어 → 한글</div>
+        <div class="mode-desc">영단어를 보고 한글 뜻 맞추기</div>
+      </div>
+      <div class="mode-arrow">›</div>
+    </div>
+    <div class="mode-card" onclick="startMode('kor2eng')">
+      <div class="mode-icon b">📖</div>
+      <div class="mode-info">
+        <div class="mode-name">한글 → 영어</div>
+        <div class="mode-desc">한글 뜻을 보고 영단어 맞추기</div>
+      </div>
+      <div class="mode-arrow">›</div>
+    </div>
+    <div class="mode-card" onclick="startMode('sentence')">
+      <div class="mode-icon c">✏️</div>
+      <div class="mode-info">
+        <div class="mode-name">서술형 문장 배열</div>
+        <div class="mode-desc">핵심 구/절 단어를 순서대로 배치</div>
+      </div>
+      <div class="mode-arrow">›</div>
+    </div>
+  </div>
+
+  <div class="sec-title">단어 퀴즈 문제 수</div>
+  <div class="count-row">
+    <button class="cnt-btn" onclick="selCount(this,10)">10문제</button>
+    <button class="cnt-btn sel" onclick="selCount(this,20)">20문제</button>
+    <button class="cnt-btn" onclick="selCount(this,30)">30문제</button>
+    <button class="cnt-btn" onclick="selCount(this,0)">전체</button>
+  </div>
+
+  <div class="footer">ABSOLUTE 영어 · 결과로 증명하는 압도적 실력</div>
+</div>
+
+<!-- 단어 퀴즈 -->
+<div class="screen" id="screen-word">
+  <div class="qz-header">
+    <button class="back-btn" onclick="goHome()">←</button>
+    <div class="qz-prog-wrap">
+      <div class="qz-prog-label">
+        <span id="w-label">1 / 20</span>
+        <span id="w-score">맞춤: 0</span>
+      </div>
+      <div class="prog-bar"><div class="prog-fill" id="w-prog" style="width:0%"></div></div>
+    </div>
+  </div>
+  <div class="badge-row">
+    <span class="badge" id="w-mode-badge">🔤 영어→한글</span>
+    <span class="badge num" id="w-src-badge">21번</span>
+  </div>
+  <div class="q-card">
+    <div>
+      <div class="q-text" id="w-question">—</div>
+      <div class="q-sub" id="w-hint"></div>
+    </div>
+  </div>
+  <div class="choices" id="w-choices"></div>
+  <div class="feedback" id="w-feedback">
+    <span id="w-fb-emoji">✅</span>
+    <div><div id="w-fb-text">정답!</div><div class="fb-ans" id="w-fb-ans"></div></div>
+  </div>
+  <button class="next-btn" id="w-next" onclick="wordNext()">다음 →</button>
+  <div class="footer">ABSOLUTE 영어 · 결과로 증명하는 압도적 실력</div>
+</div>
+
+<!-- 문장 배열 퀴즈 -->
+<div class="screen" id="screen-sent">
+  <div class="qz-header">
+    <button class="back-btn" onclick="goHome()">←</button>
+    <div class="qz-prog-wrap">
+      <div class="qz-prog-label">
+        <span id="s-label">1 / 28</span>
+        <span id="s-score">맞춤: 0</span>
+      </div>
+      <div class="prog-bar"><div class="prog-fill" id="s-prog" style="width:0%"></div></div>
+    </div>
+  </div>
+  <div class="badge-row">
+    <span class="badge">✏️ 문장 배열</span>
+    <span class="badge num" id="s-src-badge">21번</span>
+  </div>
+  <div class="sent-card">
+    <div class="sent-label" id="s-gram-label">📌 문법 포인트</div>
+    <div class="sent-hint" id="s-hint"></div>
+    <div class="sent-context" id="s-context"></div>
+    <div style="font-size:11px;color:var(--muted);margin-bottom:8px;">🟠 주황색 부분을 영작하세요</div>
+    <div class="answer-zone" id="answer-zone"></div>
+    <div style="font-size:11px;color:var(--muted);margin-bottom:8px;margin-top:14px;">단어 카드</div>
+    <div class="word-pool" id="word-pool"></div>
+    <div class="sent-btns">
+      <button class="reset-btn" onclick="resetAnswer()">↺ 초기화</button>
+      <button class="check-btn" onclick="checkSentence()">정답 확인 ✓</button>
+    </div>
+    <div class="sent-feedback" id="s-feedback">
+      <div id="s-fb-text"></div>
+      <div class="correct-sent" id="s-correct"></div>
+    </div>
+  </div>
+  <button class="next-btn" id="s-next" onclick="sentNext()">다음 문장 →</button>
+  <div class="footer">ABSOLUTE 영어 · 결과로 증명하는 압도적 실력</div>
+</div>
+
+<!-- 결과 -->
+<div class="screen" id="screen-result">
+  <div class="result-hero">
+    <div class="score-ring" id="score-ring">
+      <div class="score-inner">
+        <div class="score-pct" id="r-pct">0%</div>
+        <div class="score-sub-l">정답률</div>
+      </div>
+    </div>
+    <div class="result-title" id="r-title">완료!</div>
+    <div class="result-sub" id="r-sub"></div>
+  </div>
+  <div class="res-stats">
+    <div class="res-stat"><div class="res-n g" id="r-correct">0</div><div class="res-l">정답</div></div>
+    <div class="res-stat"><div class="res-n r" id="r-wrong">0</div><div class="res-l">오답</div></div>
+    <div class="res-stat"><div class="res-n gold" id="r-total">0</div><div class="res-l">전체</div></div>
+  </div>
+  <div id="r-wrong-section">
+    <div class="wrong-title">❌ 오답 노트</div>
+    <div id="r-wrong-list"></div>
+  </div>
+  <div class="res-btns">
+    <button class="res-btn primary" onclick="goHome()">🏠 홈으로</button>
+    <button class="res-btn ghost" onclick="retryWrong()">❌ 오답 재시험</button>
+  </div>
+  <div class="footer">ABSOLUTE 영어 · 결과로 증명하는 압도적 실력</div>
+</div>
+
+<script>
+const WORDS = [
+  // 모의고사 21번
+  {w:'respectful',m:'존중하는',src:'모의 21번'},
+  {w:'misconception',m:'오개념',src:'모의 21번'},
+  {w:'forefront',m:'전면, 맨 앞',src:'모의 21번'},
+  {w:'derogatory',m:'비하하는',src:'모의 21번'},
+  {w:'verbal',m:'언어적인',src:'모의 21번'},
+  {w:'equip',m:'준비시키다',src:'모의 21번'},
+  {w:'defend',m:'방어하다',src:'모의 21번'},
+  {w:'shift',m:'옮기다',src:'모의 21번'},
+  // 모의고사 22번
+  {w:'intercity',m:'도시 간의',src:'모의 22번'},
+  {w:'commuter',m:'통근자',src:'모의 22번'},
+  {w:'retrieve',m:'되찾다',src:'모의 22번'},
+  {w:'separate',m:'분리하다',src:'모의 22번'},
+  {w:'platform',m:'승강장',src:'모의 22번'},
+  {w:'concise',m:'간결한',src:'모의 22번'},
+  {w:'channelization',m:'흐름 유도',src:'모의 22번'},
+  {w:'conflict',m:'충돌',src:'모의 22번'},
+  // 모의고사 23번
+  {w:'trigger',m:'유발하다',src:'모의 23번'},
+  {w:'motivation',m:'계기, 동기',src:'모의 23번'},
+  {w:'intensity',m:'강도',src:'모의 23번'},
+  {w:'subtle',m:'미묘한',src:'모의 23번'},
+  {w:'atmosphere',m:'분위기',src:'모의 23번'},
+  {w:'transition',m:'전환',src:'모의 23번'},
+  {w:'threatening',m:'위협적인',src:'모의 23번'},
+  {w:'dramatic',m:'극적인',src:'모의 23번'},
+  // 모의고사 24번
+  {w:'remarkable',m:'놀라운',src:'모의 24번'},
+  {w:'acoustical',m:'음향의',src:'모의 24번'},
+  {w:'loudspeaker',m:'스피커',src:'모의 24번'},
+  {w:'signal',m:'신호',src:'모의 24번'},
+  {w:'playback',m:'재생',src:'모의 24번'},
+  {w:'dramatically',m:'극적으로',src:'모의 24번'},
+  {w:'microphone',m:'마이크',src:'모의 24번'},
+  {w:'consistently',m:'일관되게',src:'모의 24번'},
+  // 모의고사 29번
+  {w:'apprentice',m:'견습생',src:'모의 29번'},
+  {w:'specialize',m:'전문으로 하다',src:'모의 29번'},
+  {w:'essentially',m:'기본적으로',src:'모의 29번'},
+  {w:'efficiency',m:'효율성',src:'모의 29번'},
+  {w:'facility',m:'시설',src:'모의 29번'},
+  {w:'manufacturing',m:'제조',src:'모의 29번'},
+  {w:'prior to',m:'~이전에',src:'모의 29번'},
+  // 모의고사 31번
+  {w:'imaginary',m:'상상의',src:'모의 31번'},
+  {w:'disrupt',m:'방해하다',src:'모의 31번'},
+  {w:'causal',m:'인과적인',src:'모의 31번'},
+  {w:'pretend',m:'가장하다',src:'모의 31번'},
+  {w:'avoidance',m:'회피',src:'모의 31번'},
+  {w:'exhibit',m:'나타내다',src:'모의 31번'},
+  {w:'refuse',m:'거부하다',src:'모의 31번'},
+  // 교과서 1과
+  {w:'access',m:'접근하다',src:'교과서 1과'},
+  {w:'addict',m:'중독시키다',src:'교과서 1과'},
+  {w:'anxiety',m:'불안, 걱정',src:'교과서 1과'},
+  {w:'assistance',m:'도움',src:'교과서 1과'},
+  {w:'commit',m:'전념하다',src:'교과서 1과'},
+  {w:'conservation',m:'보호, 보존',src:'교과서 1과'},
+  {w:'control',m:'통제',src:'교과서 1과'},
+  {w:'detox',m:'디톡스, 해독',src:'교과서 1과'},
+  {w:'desperate',m:'절실한',src:'교과서 1과'},
+  {w:'enthusiastic',m:'열성적인',src:'교과서 1과'},
+  {w:'envy',m:'시기하다',src:'교과서 1과'},
+  {w:'gaze',m:'시선',src:'교과서 1과'},
+  {w:'give in',m:'굴복하다',src:'교과서 1과'},
+  {w:'guilt',m:'죄책감',src:'교과서 1과'},
+  {w:'impact',m:'영향',src:'교과서 1과'},
+  {w:'impatient',m:'안달하는',src:'교과서 1과'},
+  {w:'independent',m:'독립적인',src:'교과서 1과'},
+  {w:'insult',m:'모욕하다',src:'교과서 1과'},
+  {w:'interact',m:'교류하다',src:'교과서 1과'},
+  {w:'maintain',m:'유지하다',src:'교과서 1과'},
+  {w:'productive',m:'생산적인',src:'교과서 1과'},
+  {w:'reflect',m:'깊이 생각하다',src:'교과서 1과'},
+  {w:'relief',m:'안도',src:'교과서 1과'},
+  {w:'replace',m:'대체하다',src:'교과서 1과'},
+  {w:'severe',m:'심한',src:'교과서 1과'},
+  {w:'think up',m:'생각해 내다',src:'교과서 1과'},
+  {w:'urge',m:'충동',src:'교과서 1과'},
+  {w:'valuable',m:'귀중한',src:'교과서 1과'},
+  // 교과서 2과
+  {w:'architectural',m:'건축의',src:'교과서 2과'},
+  {w:'by accident',m:'우연히',src:'교과서 2과'},
+  {w:'boundary',m:'경계',src:'교과서 2과'},
+  {w:'cast',m:'(그림자를) 드리우다',src:'교과서 2과'},
+  {w:'combine',m:'결합하다',src:'교과서 2과'},
+  {w:'delight',m:'즐겁게 하다',src:'교과서 2과'},
+  {w:'depict',m:'묘사하다',src:'교과서 2과'},
+  {w:'flawlessly',m:'완벽하게',src:'교과서 2과'},
+  {w:'forced',m:'강요된',src:'교과서 2과'},
+  {w:'fuse',m:'융합하다',src:'교과서 2과'},
+  {w:'illusion',m:'환상',src:'교과서 2과'},
+  {w:'illustration',m:'삽화',src:'교과서 2과'},
+  {w:'imaginative',m:'상상력이 풍부한',src:'교과서 2과'},
+  {w:'interpretation',m:'해석',src:'교과서 2과'},
+  {w:'landscape',m:'풍경',src:'교과서 2과'},
+  {w:'perception',m:'지각, 인식',src:'교과서 2과'},
+  {w:'pleasing',m:'즐거운',src:'교과서 2과'},
+  {w:'possibility',m:'가능성',src:'교과서 2과'},
+  {w:'reaction',m:'반응',src:'교과서 2과'},
+  {w:'realist',m:'사실주의 작가',src:'교과서 2과'},
+  {w:'shadow',m:'그림자',src:'교과서 2과'},
+  {w:'trace',m:'추적하다',src:'교과서 2과'},
+  {w:'unexpected',m:'예상 밖의',src:'교과서 2과'},
+  {w:'unrelated',m:'관련 없는',src:'교과서 2과'},
+];
+
+const SENTENCES = [
+  // 모의고사 21번
+  {src:'모의 21번', gram:'unless 조건절 / 수동태',
+   hint:'틀린 답은 종종 오개념에서 비롯되며, <span class="hl">이러한 생각이 전면에 드러나도록 허락되지 않는다면</span> 학생들을 도울 수 없다.',
+   prefix:'Wrong answers are often rooted in misconceptions, and', target:'unless these ideas are allowed to be brought to the forefront', suffix:', we cannot help students confront their thinking.',
+   sentence:'Wrong answers are often rooted in misconceptions, and unless these ideas are allowed to be brought to the forefront, we cannot help students confront their thinking.'},
+  {src:'모의 21번', gram:'by + 동명사 / 관계대명사 that',
+   hint:'우리는 <span class="hl">동의 또는 비동의를 나타내는 언어적·신체적 표현 없이 모든 답변을 기록함으로써</span> 이를 보여줄 수 있다.',
+   prefix:'We can model this', target:'by recording all answers without giving any verbal or physical expressions that indicate agreement or disagreement', suffix:'.',
+   sentence:'We can model this by recording all answers without giving any verbal or physical expressions that indicate agreement or disagreement.'},
+  // 모의고사 22번
+  {src:'모의 22번', gram:'should + 수동태 / to부정사 목적',
+   hint:'이 두 종류의 교통은 <span class="hl">충돌과 혼란을 피하기 위해 분리되어 있어야 한다</span>.',
+   prefix:'', target:'These two types of traffic should be kept separate to avoid conflict and confusion', suffix:'.',
+   sentence:'These two types of traffic should be kept separate to avoid conflict and confusion.'},
+  {src:'모의 22번', gram:'so that 목적절',
+   hint:'<span class="hl">두 동선이 교차하지 않도록</span> 별도의 승강장이 사용되어야 한다.',
+   prefix:'Separate platforms should be used and traffic routed', target:'so that the two lines of movement do not cross', suffix:'.',
+   sentence:'Separate platforms should be used and traffic routed so that the two lines of movement do not cross.'},
+  // 모의고사 23번
+  {src:'모의 23번', gram:'관계대명사 that / 병렬구조',
+   hint:'조명 신호도 보통 <span class="hl">계기가 필요한데</span>, 이는 매우 명백한 것일 수도 있다.',
+   prefix:'Like actors,', target:'lighting cues usually need a motivation', suffix:' — this might be something very obvious.',
+   sentence:'lighting cues usually need a motivation this might be something very obvious.'},
+  {src:'모의 23번', gram:'needs to be + 과거분사 (수동태)',
+   hint:'이 질문은 <span class="hl">작품의 각 순간, 각 극적 단위, 각 전환마다 제기될 필요가 있다</span>.',
+   prefix:"The question 'What will lighting do for this production?'", target:'needs to be asked for each moment of the production, each dramatic unit or scene, and each transition', suffix:'.',
+   sentence:"The question needs to be asked for each moment of the production, each dramatic unit or scene, and each transition."},
+  // 모의고사 24번
+  {src:'모의 24번', gram:'비교 / because 이유절',
+   hint:'스피커에서 나오는 소리는 <span class="hl">방이 신호 경로의 일부가 되기 때문에</span> 음향 환경마다 다르게 들린다.',
+   prefix:'Sound from a loudspeaker will sound different in every acoustical environment', target:'because the room is now part of the signal path', suffix:'.',
+   sentence:'Sound from a loudspeaker will sound different in every acoustical environment because the room is now part of the signal path.'},
+  {src:'모의 24번', gram:'관계대명사 where / 부사절',
+   hint:'당신이 스피커를 설치하는 <span class="hl">모든 방이 당신이 듣는 소리를 다르게 만들 것이다</span>.',
+   prefix:'', target:'Every room where you set up the loudspeaker will cause the sound you hear to be different', suffix:'.',
+   sentence:'Every room where you set up the loudspeaker will cause the sound you hear to be different.'},
+  // 모의고사 29번
+  {src:'모의 29번', gram:'in which 관계대명사',
+   hint:'대부분의 피아노 가게들은 <span class="hl">숙련가가 젊은 직원에게 기술을 가르치는</span> 견습생 제도를 이용했다.',
+   prefix:'Most piano shops used an apprentice system', target:'in which a master builder taught younger workers the skills of the trade', suffix:'.',
+   sentence:'Most piano shops used an apprentice system in which a master builder taught younger workers the skills of the trade.'},
+  {src:'모의 29번', gram:'분사구문 (수동) / 어법',
+   hint:'진정한 피아노 공장의 발전은 미국에서 먼저 일어났는데, <span class="hl">Jonas Chickering과 Steinway 가문에 의해 주도되었다</span>.',
+   prefix:'The development of a true piano factory occurred first in the United States,', target:'led by Jonas Chickering in Boston and later the Steinway family in New York City', suffix:'.',
+   sentence:'The development of a true piano factory occurred first in the United States, led by Jonas Chickering in Boston and later the Steinway family in New York City.'},
+  // 모의고사 31번
+  {src:'모의 31번', gram:'even though 양보절 / enough to',
+   hint:'아이가 괴물이 실제가 아니라는 것을 알더라도, <span class="hl">침대 밑 괴물이라는 생각만으로도 방에 들어가기를 거부하게 만들기에 충분할 수 있다</span>.',
+   prefix:'Even though a child knows that monsters are not real,', target:'the thought of a monster under a bed might be enough to make a child refuse to go into his room at night', suffix:'.',
+   sentence:'Even though a child knows that monsters are not real, the thought of a monster under a bed might be enough to make a child refuse to go into his room at night.'},
+  {src:'모의 31번', gram:'when 시간절 / 수동태',
+   hint:'그들이 상자와 함께 혼자 남겨졌을 때, <span class="hl">그들은 두려움과 회피를 보였다</span>.',
+   prefix:'When they were left alone with the box,', target:'they exhibited fear and avoidance of it', suffix:'.',
+   sentence:'When they were left alone with the box, they exhibited fear and avoidance of it.'},
+  // 교과서 1과
+  {src:'교과서 1과', gram:'to부정사 결과적 용법',
+   hint:'휴대 전화에서 눈을 들어다보니 <span class="hl">엄마가 나에게 소리치고 있었다</span>.',
+   prefix:'I look up from my phone', target:'to discover my mom yelling at me', suffix:'.',
+   sentence:'I look up from my phone to discover my mom yelling at me.'},
+  {src:'교과서 1과', gram:'관계대명사 that / from + 동명사',
+   hint:'나는 <span class="hl">휴대 전화를 확인하지 않는 데서 오는</span> 심한 불안 증상이 있다.',
+   prefix:'I have a bad case of anxiety', target:'that comes from not checking my phone', suffix:'.',
+   sentence:'I have a bad case of anxiety that comes from not checking my phone.'},
+  {src:'교과서 1과', gram:'전치사+관계대명사 for which',
+   hint:'나는 심한 FOMO를 겪고 있는데, <span class="hl">치료법이 절실히 필요한 상태이다</span>.',
+   prefix:'Basically, I have severe FOMO,', target:'for which I am in desperate need of a cure', suffix:'.',
+   sentence:'Basically, I have severe FOMO, for which I am in desperate need of a cure.'},
+  {src:'교과서 1과', gram:'only to + 동사원형 (결과)',
+   hint:'손가락으로 밀어서 휴대 전화를 열었지만, <span class="hl">결국 소셜 미디어 앱들이 더 이상 없다는 것을 알게 되었다</span>.',
+   prefix:'I swiped my phone open', target:'only to remember my social media apps were no longer there', suffix:'.',
+   sentence:'I swiped my phone open only to remember my social media apps were no longer there.'},
+  {src:'교과서 1과', gram:'as if + 분사 (가정법)',
+   hint:'<span class="hl">마치 주문에 걸린 것처럼</span>, 소셜 미디어 사이트에 로그인했다.',
+   prefix:'', target:'As if bound by a spell', suffix:', I logged into one of the social media sites.',
+   sentence:'As if bound by a spell, I logged into one of the social media sites.'},
+  {src:'교과서 1과', gram:'find oneself + -ing',
+   hint:'어느덧 나는 <span class="hl">그 평화로운 광경의 사진을 찍고 있는</span> 나 자신을 발견했다.',
+   prefix:'Soon', target:'I found myself taking a couple of pictures of the peaceful scene', suffix:'.',
+   sentence:'Soon I found myself taking a couple of pictures of the peaceful scene.'},
+  {src:'교과서 1과', gram:'all (that) I did + was + 동사원형',
+   hint:'내가 한 것이라곤 <span class="hl">다른 사람들의 행복한 순간들을 시기한 것뿐</span>이라는 게 우스꽝스럽다.',
+   prefix:"It's kind of silly that", target:'all I did was envy others for their perfectly happy moments in life', suffix:'.',
+   sentence:"It's kind of silly that all I did was envy others for their perfectly happy moments in life."},
+  {src:'교과서 1과', gram:'while + 분사구문 / in line with',
+   hint:'내가 정말 필요한 두세 개의 사이트만 고수하면서, <span class="hl">내 활동이 확실히 내 웰빙과 행복에 관련이 있도록 할 것이다</span>.',
+   prefix:"I'm going to stick to just a couple of sites that I really need,", target:'while making absolutely sure that my activities are in line with my well-being and happiness', suffix:'.',
+   sentence:"I'm going to stick to just a couple of sites that I really need, while making absolutely sure that my activities are in line with my well-being and happiness."},
+  // 교과서 2과
+  {src:'교과서 2과', gram:'to부정사 명사적 용법 (보어)',
+   hint:'그렇게 하는 한 가지 방법은 <span class="hl">동떨어져 보이는 것들을 연결 짓는 것이다</span>.',
+   prefix:'One of the ways to do this is', target:'to connect things that look separate', suffix:'.',
+   sentence:'One of the ways to do this is to connect things that look separate.'},
+  {src:'교과서 2과', gram:'help + 목적어 + 동사원형',
+   hint:'이것은 <span class="hl">우리가 세상을 다른 시각으로 바라보고 더 큰 이해를 얻도록 돕기</span> 때문에 즐거울 수 있다.',
+   prefix:'This can be incredibly pleasing as', target:'it helps us see the world in a different light and gain a greater appreciation for the interrelation of all things', suffix:'.',
+   sentence:'This can be incredibly pleasing as it helps us see the world in a different light and gain a greater appreciation for the interrelation of all things.'},
+  {src:'교과서 2과', gram:'turn A into B / 관계대명사 what',
+   hint:'그의 독특한 전환은 때때로 <span class="hl">우리가 따분하다고 여기는 것을 즐거운 무언가로 바꾸어 놓는다</span>.',
+   prefix:'His unique twists sometimes', target:'turn what we consider dull and boring into something delightful', suffix:'.',
+   sentence:'His unique twists sometimes turn what we consider dull and boring into something delightful.'},
+  {src:'교과서 2과', gram:'whatever 복합관계대명사',
+   hint:'관련 없는 두 사물 사이에서 <span class="hl">무엇이든 공통점이 될 만한 것을 찾은 후</span>, 그는 그것들을 연결한다.',
+   prefix:'', target:'After finding whatever is common in two unrelated things', suffix:', he connects them smoothly in his digital drawing.',
+   sentence:'After finding whatever is common in two unrelated things, he connects them smoothly in his digital drawing.'},
+  {src:'교과서 2과', gram:'지각동사 see + 목적어 + 현재분사',
+   hint:'그림의 오른쪽 상단을 보면, <span class="hl">침대 위에서 뛰고 있는 한 아이가 보인다</span>.',
+   prefix:'When you look at the top right corner of the painting,', target:'you can see a kid jumping on his bed', suffix:'.',
+   sentence:'When you look at the top right corner of the painting, you can see a kid jumping on his bed.'},
+  {src:'교과서 2과', gram:'so ~ that 결과절',
+   hint:'반응이 <span class="hl">너무 긍정적이어서 그는 매일 하나의 그림자 그림을 만드는 데 도전했다</span>.',
+   prefix:'', target:'The reactions were so positive that he challenged himself to make one shadow image every day', suffix:'.',
+   sentence:'The reactions were so positive that he challenged himself to make one shadow image every day.'},
+  {src:'교과서 2과', gram:'it was ~ that 강조구문',
+   hint:'사실, <span class="hl">그가 예술 작품을 만들기 시작한 것은 우연한 일이었다</span>.',
+   prefix:'In fact,', target:'it was by accident that he started making his art pieces', suffix:'.',
+   sentence:'In fact, it was by accident that he started making his art pieces.'},
+  {src:'교과서 2과', gram:'all + 주어 + 동사 + is + 명사',
+   hint:'이런 연결을 만들기 위해 <span class="hl">당신에게 필요한 것은 상상력뿐이다</span>.',
+   prefix:'To make such connections,', target:'all you need is your imaginative power', suffix:'.',
+   sentence:'To make such connections, all you need is your imaginative power.'},
+];
+
+// 상태
+let mode = '';
+let wordQueue = [], wIdx = 0, wCorrect = 0, wWrong = [];
+let sentQueue = [], sIdx = 0, sCorrect = 0, sWrong = [];
+let selectedAnswer = [], shuffledWords = [];
+let selectedCount = 20;
+let sentChecked = false;
+
+function selCount(el, n) {
+  document.querySelectorAll('.cnt-btn').forEach(b => b.classList.remove('sel'));
+  el.classList.add('sel');
+  selectedCount = n;
+}
+
+function startMode(m) {
+  mode = m;
+  if (m === 'sentence') {
+    sentQueue = shuffle([...SENTENCES]);
+    sIdx = 0; sCorrect = 0; sWrong = [];
+    showScreen('screen-sent');
+    renderSent();
+  } else {
+    let pool = shuffle([...WORDS]);
+    if (selectedCount > 0) pool = pool.slice(0, selectedCount);
+    wordQueue = pool;
+    wIdx = 0; wCorrect = 0; wWrong = [];
+    showScreen('screen-word');
+    renderWord();
+  }
+}
+
+function goHome() { showScreen('screen-home'); }
+
+function renderWord() {
+  const item = wordQueue[wIdx];
+  const total = wordQueue.length;
+  document.getElementById('w-label').textContent = `${wIdx+1} / ${total}`;
+  document.getElementById('w-score').textContent = `맞춤: ${wCorrect}`;
+  document.getElementById('w-prog').style.width = `${(wIdx/total)*100}%`;
+  const isEng = mode === 'eng2kor';
+  document.getElementById('w-mode-badge').textContent = isEng ? '🔤 영어→한글' : '📖 한글→영어';
+  document.getElementById('w-src-badge').textContent = '📌 ' + item.src;
+  document.getElementById('w-question').textContent = isEng ? item.w : item.m;
+  document.getElementById('w-hint').textContent = isEng ? '위 단어의 뜻을 고르세요' : '위 뜻에 해당하는 영단어를 고르세요';
+
+  const correct = isEng ? item.m : item.w;
+  const pool = WORDS.filter(x => x.w !== item.w);
+  const distractors = [];
+  const seen = new Set([correct]);
+  for (const d of shuffle(pool)) {
+    const val = isEng ? d.m : d.w;
+    if (!seen.has(val)) { seen.add(val); distractors.push(val); if (distractors.length === 3) break; }
+  }
+  const choices = shuffle([{t:correct,ok:true},...distractors.map(d=>({t:d,ok:false}))]);
+  const grid = document.getElementById('w-choices');
+  grid.innerHTML = '';
+  const nums = ['①','②','③','④'];
+  choices.forEach((c,i) => {
+    const btn = document.createElement('button');
+    btn.className = 'choice';
+    btn.innerHTML = `<span class="ch-num">${nums[i]}</span><span>${c.t}</span>`;
+    btn.onclick = () => checkWord(c.ok, btn, item, correct, choices);
+    grid.appendChild(btn);
+  });
+  document.getElementById('w-feedback').className = 'feedback';
+  document.getElementById('w-next').className = 'next-btn';
+}
+
+function checkWord(ok, btn, item, correct, choices) {
+  document.querySelectorAll('.choice').forEach(b => b.disabled = true);
+  document.querySelectorAll('.choice').forEach(b => {
+    const txt = b.querySelector('span:last-child').textContent;
+    const ch = choices.find(c => c.t === txt);
+    if (ch && ch.ok) b.classList.add('correct');
+  });
+  const fb = document.getElementById('w-feedback');
+  if (ok) {
+    wCorrect++;
+    btn.classList.add('correct');
+    fb.className = 'feedback ok show';
+    document.getElementById('w-fb-emoji').textContent = '🎉';
+    document.getElementById('w-fb-text').textContent = '정답!';
+    document.getElementById('w-fb-ans').textContent = `${item.w} = ${item.m} [${item.src}]`;
+  } else {
+    btn.classList.add('wrong');
+    fb.className = 'feedback ng show';
+    document.getElementById('w-fb-emoji').textContent = '❌';
+    document.getElementById('w-fb-text').textContent = '오답!';
+    document.getElementById('w-fb-ans').textContent = `정답: ${correct} [${item.src}]`;
+    wWrong.push(item);
+  }
+  document.getElementById('w-score').textContent = `맞춤: ${wCorrect}`;
+  document.getElementById('w-next').className = 'next-btn show';
+}
+
+function wordNext() {
+  wIdx++;
+  if (wIdx >= wordQueue.length) showWordResult();
+  else renderWord();
+}
+
+function showWordResult() {
+  const total = wordQueue.length;
+  showResult(wCorrect, total-wCorrect, total, Math.round((wCorrect/total)*100), wWrong, 'word');
+}
+
+function renderSent() {
+  const item = sentQueue[sIdx];
+  const total = sentQueue.length;
+  document.getElementById('s-label').textContent = `${sIdx+1} / ${total}`;
+  document.getElementById('s-score').textContent = `맞춤: ${sCorrect}`;
+  document.getElementById('s-prog').style.width = `${(sIdx/total)*100}%`;
+  document.getElementById('s-src-badge').textContent = '📌 ' + item.src;
+  document.getElementById('s-gram-label').textContent = '📌 문법: ' + item.gram;
+  document.getElementById('s-hint').innerHTML = item.hint;
+
+  const ctx = document.getElementById('s-context');
+  let ctxHTML = '';
+  if (item.prefix) ctxHTML += `<span class="ctx-given">${item.prefix} </span>`;
+  ctxHTML += `<span class="ctx-blank">🟠 영작하세요</span>`;
+  if (item.suffix) ctxHTML += `<span class="ctx-given">${item.suffix}</span>`;
+  ctx.innerHTML = ctxHTML;
+
+  const words = item.target.split(' ');
+  shuffledWords = shuffle([...words]);
+  selectedAnswer = [];
+  sentChecked = false;
+
+  renderPool();
+  renderZone();
+  document.getElementById('s-feedback').className = 'sent-feedback';
+  document.getElementById('s-next').className = 'next-btn';
+}
+
+function renderPool() {
+  const pool = document.getElementById('word-pool');
+  pool.innerHTML = '';
+  shuffledWords.forEach((w, i) => {
+    const chip = document.createElement('div');
+    const isUsed = selectedAnswer.includes(i);
+    chip.className = 'word-chip' + (isUsed ? ' used' : '');
+    chip.textContent = w;
+    if (!isUsed && !sentChecked) chip.onclick = () => selectWord(i);
+    pool.appendChild(chip);
+  });
+}
+
+function renderZone() {
+  const zone = document.getElementById('answer-zone');
+  zone.innerHTML = '';
+  if (selectedAnswer.length === 0) {
+    const ph = document.createElement('span');
+    ph.style.cssText = 'color:var(--muted);font-size:12px';
+    ph.textContent = '단어를 순서대로 탭하세요';
+    zone.appendChild(ph);
+    zone.classList.remove('has-words');
+  } else {
+    zone.classList.add('has-words');
+    selectedAnswer.forEach((idx, pos) => {
+      const chip = document.createElement('div');
+      chip.className = 'word-chip in-answer';
+      chip.textContent = shuffledWords[idx];
+      if (!sentChecked) chip.onclick = () => removeWord(pos);
+      zone.appendChild(chip);
+    });
+  }
+}
+
+function selectWord(idx) {
+  if (selectedAnswer.includes(idx)) return;
+  selectedAnswer.push(idx);
+  renderPool(); renderZone();
+}
+
+function removeWord(pos) {
+  selectedAnswer.splice(pos, 1);
+  renderPool(); renderZone();
+}
+
+function resetAnswer() {
+  if (sentChecked) return;
+  selectedAnswer = [];
+  renderPool(); renderZone();
+  document.getElementById('s-feedback').className = 'sent-feedback';
+}
+
+function checkSentence() {
+  if (selectedAnswer.length === 0) return;
+  const item = sentQueue[sIdx];
+  const correct = item.target.split(' ');
+  const myAnswer = selectedAnswer.map(i => shuffledWords[i]);
+  const isCorrect = JSON.stringify(myAnswer) === JSON.stringify(correct);
+  const fb = document.getElementById('s-feedback');
+
+  if (isCorrect) {
+    sCorrect++;
+    fb.className = 'sent-feedback ok show';
+    document.getElementById('s-fb-text').textContent = '🎉 정답! 완벽합니다!';
+    document.getElementById('s-correct').textContent = '';
+  } else {
+    fb.className = 'sent-feedback ng show';
+    document.getElementById('s-fb-text').textContent = '❌ 오답! 정답을 확인하세요.';
+    document.getElementById('s-correct').textContent = '✅ ' + item.target;
+    sWrong.push(item);
+  }
+  document.getElementById('s-score').textContent = `맞춤: ${sCorrect}`;
+  document.getElementById('s-next').className = 'next-btn show';
+  sentChecked = true;
+  renderPool(); renderZone();
+}
+
+function sentNext() {
+  sIdx++;
+  if (sIdx >= sentQueue.length) showSentResult();
+  else renderSent();
+}
+
+function showSentResult() {
+  const total = sentQueue.length;
+  showResult(sCorrect, total-sCorrect, total, Math.round((sCorrect/total)*100), sWrong, 'sent');
+}
+
+function showResult(correct, wrong, total, pct, wrongList, type) {
+  document.getElementById('r-pct').textContent = pct + '%';
+  document.getElementById('score-ring').style.setProperty('--pct', pct + '%');
+  document.getElementById('r-correct').textContent = correct;
+  document.getElementById('r-wrong').textContent = wrong;
+  document.getElementById('r-total').textContent = total;
+  const msgs = [[90,'🏆 완벽!','최상위권 실력!'],[70,'👏 훌륭해요!','조금만 더!'],[50,'💪 노력 중!','오답 복습 필수!'],[0,'📚 더 연습!','오답을 집중 복습하세요']];
+  const [,t,s] = msgs.find(([th]) => pct >= th);
+  document.getElementById('r-title').textContent = t;
+  document.getElementById('r-sub').textContent = s;
+  const wList = document.getElementById('r-wrong-list');
+  wList.innerHTML = '';
+  const unique = [...new Map(wrongList.map(x => [type==='word'?x.w:x.sentence, x])).values()];
+  if (unique.length === 0) {
+    document.getElementById('r-wrong-section').innerHTML = '<div style="text-align:center;color:#10b981;padding:16px">✅ 오답 없음! 완벽합니다!</div>';
+  } else {
+    unique.forEach(x => {
+      const el = document.createElement('div');
+      el.className = 'wrong-item';
+      if (type === 'word') {
+        el.innerHTML = `<div class="wrong-word">${x.w}</div><div class="wrong-detail">뜻: ${x.m} | ${x.src}</div>`;
+      } else {
+        el.innerHTML = `<div class="wrong-word">${x.src} · ${x.gram}</div><div class="wrong-detail" style="margin-top:4px;line-height:1.6;font-size:11px">${x.target}</div>`;
+      }
+      wList.appendChild(el);
+    });
+  }
+  showScreen('screen-result');
+}
+
+function retryWrong() {
+  if (mode === 'sentence') {
+    if (sWrong.length === 0) return;
+    sentQueue = shuffle([...sWrong]);
+    sIdx = 0; sCorrect = 0; sWrong = [];
+    showScreen('screen-sent'); renderSent();
+  } else {
+    if (wWrong.length === 0) return;
+    wordQueue = shuffle([...wWrong]);
+    wIdx = 0; wCorrect = 0; wWrong = [];
+    showScreen('screen-word'); renderWord();
+  }
+}
+
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length-1; i > 0; i--) {
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+  return a;
+}
+</script>
+</body>
+</html>
